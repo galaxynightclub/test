@@ -23,6 +23,7 @@ body{
 h1{
   text-align:center;
   font-size:42px;
+  margin-bottom:5px;
   color:#ffb3ff;
 }
 h2{
@@ -123,6 +124,13 @@ h2{
 
 <div class="item"><span>Gansito</span><div class="controls"><button onclick="removeItem('gansito',700)">−</button><span class="qty" id="gansito">0</span><button onclick="addItem('gansito',700)">+</button><span class="price">$700</span></div></div>
 
+<h2>🌟 Zona de Ofertas: Combos</h2>
+
+<div class="combo item"><span>⭐ Oferta Estelar</span><div class="controls"><button onclick="removeItem('combo1',10900)">−</button><span class="qty" id="combo1">0</span><button onclick="addItem('combo1',10900)">+</button><span class="price">$10.900</span></div></div>
+<div class="combo item"><span>🪐 Oferta El Planeta</span><div class="controls"><button onclick="removeItem('combo2',5500)">−</button><span class="qty" id="combo2">0</span><button onclick="addItem('combo2',5500)">+</button><span class="price">$5.500</span></div></div>
+<div class="combo item"><span>🚀 Fuga Espacial</span><div class="controls"><button onclick="removeItem('combo3',3000)">−</button><span class="qty" id="combo3">0</span><button onclick="addItem('combo3',3000)">+</button><span class="price">$3.000</span></div></div>
+<div class="combo item"><span>💥 Supernova</span><div class="controls"><button onclick="removeItem('combo4',5450)">−</button><span class="qty" id="combo4">0</span><button onclick="addItem('combo4',5450)">+</button><span class="price">$5.450</span></div></div>
+
 <div style="margin-top:30px; display:flex; gap:10px;">
 <button class="reset" style="background:#3aed7c;" onclick="discount(20)">Descuento Facción 20%</button>
 <button class="reset" style="background:#3a7ced;" onclick="discount(25)">Descuento Facción 25%</button>
@@ -130,6 +138,7 @@ h2{
 
 <div class="total" id="total">Total: $0</div>
 <button class="reset" onclick="resetTotal()">Resetear venta</button>
+
 </div>
 
 <script>
@@ -139,26 +148,26 @@ let cantidades = {};
 function addItem(id, precio){
   cantidades[id] = (cantidades[id] || 0) + 1;
   total += precio;
-  document.getElementById(id).innerText = cantidades[id];
-  document.getElementById('total').innerText = 'Total: $' + total.toLocaleString('es-CL');
+  actualizar(id);
 }
-
 function removeItem(id, precio){
   if(cantidades[id] > 0){
     cantidades[id]--;
     total -= precio;
-    document.getElementById(id).innerText = cantidades[id];
-    document.getElementById('total').innerText = 'Total: $' + total.toLocaleString('es-CL');
+    actualizar(id);
   }
 }
-
+function actualizar(id){
+  document.getElementById(id).innerText = cantidades[id];
+  document.getElementById('total').innerText =
+    'Total: $' + total.toLocaleString('es-CL');
+}
 function resetTotal(){
   total = 0;
   cantidades = {};
   document.querySelectorAll('.qty').forEach(e => e.innerText = '0');
   document.getElementById('total').innerText = 'Total: $0';
 }
-
 function discount(percent){
   total = Math.round(total - (total * percent / 100));
   document.getElementById('total').innerText =
